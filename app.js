@@ -5,10 +5,11 @@ var bodyParser = require('body-parser');
 var axios = require('axios');
 var http = require('http');
 var app = express();
-var io = require('socket.io');
+var socketIO = require('socket.io');
+
 
 var server = http.createServer(app);
-var socket = io(server);
+var io = socketIO(server);
 var port = process.env.PORT || 4001;
 
 app.use(bodyParser.json({limit: "50mb"}));
@@ -24,25 +25,21 @@ app.get('*', function(req, res, next) {
 
 
 
-socket.on("connection", socket => {
-  console.log("New client connected"), setInterval(
-    () => getApiAndEmit(socket),
-    10000
-  );
-  socket.on("disconnect", () => console.log("Client disconnected"));
+io.on("connection", socket => {
+	console.log("new clineipoi connected")
+  	socket.on("color change", (color) => {
+  		console.log("color changed to", color);
+  		io.sockets.emit("color change ", color);
+  	})
+  	socket.on("disconnect", () => {
+  		console.log("user disconnect");
+  	})
 });
-var getApiAndEmit = async socket => {
-  try {
-    var res = await axios.get(
-      "http://ShakeItSpeare.com/api/sentence"
-    );
-    socket.emit("FromAPI", res.data);
-  } catch (error) {
-    console.error(`Error: ${error.code}`);
-  }
-};
 
-app.listen(3000);
+
+
+
+// app.listen(3000);
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
