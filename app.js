@@ -26,10 +26,10 @@ app.get('*', function(req, res, next) {
 
 
 io.on("connection", socket => {
-	console.log("new clineipoi connected")
-  	socket.on("color change", (color) => {
+	console.log("new client connected")
+  	socket.on("color change", color => {
   		console.log("color changed to", color);
-  		io.sockets.emit("color change ", color);
+  		io.sockets.emit("color has changed", color);
   	})
   	socket.on("disconnect", () => {
   		console.log("user disconnect");
