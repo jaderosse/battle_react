@@ -28,7 +28,6 @@ app.get('*', function(req, res, next) {
 io.on("connection", socket => {
 	console.log("new client connected")
   	socket.on("color change", color => {
-  		console.log("color changed to", color);
   		io.sockets.emit("color has changed", color);
   	})
   	socket.on("disconnect", () => {
@@ -36,10 +35,6 @@ io.on("connection", socket => {
   	})
 });
 
-
-
-
-// app.listen(3000);
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
 

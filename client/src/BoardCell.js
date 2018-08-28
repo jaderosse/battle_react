@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
+import Socket from './socket.js';
+
 
 class BoardCell extends Component {
 	render(){
 		return (
-			<div>
-				<p>i am smol cel</p>
-			</div>
+			<Socket />
 		)
 	}
 }
