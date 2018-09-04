@@ -3,24 +3,17 @@ import Socket from './socket.js';
 
 
 class Board extends Component {
-	constructor(){
-		super();
-		this.state = {
-			squares: Array(64).fill(null)
-			}
-		}
-	
-	renderCell(i){
-		return <Socket position={this.state.squares[i]} />
-	}
-
 	render(){
+		let cells = [];
+  	for (let i = 0; i < 10; i++) {
+    	cells.push(<Socket value={i} />);
+  	}
 			return (
 				<div>
-					{this.renderCell(19)}
+					{cells}
 				</div>
 			)
+		}
 	}
-}
 
 export default Board;

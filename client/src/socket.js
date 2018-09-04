@@ -7,10 +7,11 @@ class Socket extends Component {
     super();
     this.state = {
       endpoint: "http://127.0.0.1:4001/",
-      color: 'white',
-      position: ''
+      color: 'white'
     }
   }
+
+  //this.props.value
 
   //eventually want controls without buttons
   //click inside component to change color based on if ship is present
@@ -20,7 +21,6 @@ class Socket extends Component {
   //give each cell unique id, then connect each w/socket
 
 componentDidMount = () => {
-  this.setState({position: this.props.position})
   const socket = socketIOClient(this.state.endpoint)
   socket.on('color has changed', (col) => {
     // document.body.style.backgroundColor = col
@@ -34,9 +34,9 @@ componentDidMount = () => {
   }
 
   render() {
-    console.log(this.state.position)
+    console.log()
     return (
-      <div id="cell" style={{backgroundColor: this.state.color}}>
+      <div id={this.props.value} className="cell" style={{backgroundColor: this.state.color}}>
         <button onClick={() => this.send() }>Change Color</button>
         <button id="blue" onClick={() => this.setState({color: 'blue'})}>Blue</button>
         <button id="red" onClick={() => this.setState({color: 'red'})}>Red</button>
