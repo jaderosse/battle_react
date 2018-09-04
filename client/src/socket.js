@@ -8,7 +8,7 @@ class Socket extends Component {
     this.state = {
       endpoint: "http://127.0.0.1:4001/",
       color: 'white',
-      // position: this.props.id
+      position: ''
     }
   }
 
@@ -20,6 +20,7 @@ class Socket extends Component {
   //give each cell unique id, then connect each w/socket
 
 componentDidMount = () => {
+  this.setState({position: this.props.position})
   const socket = socketIOClient(this.state.endpoint)
   socket.on('color has changed', (col) => {
     // document.body.style.backgroundColor = col
@@ -33,6 +34,7 @@ componentDidMount = () => {
   }
 
   render() {
+    console.log(this.state.position)
     return (
       <div id="cell" style={{backgroundColor: this.state.color}}>
         <button onClick={() => this.send() }>Change Color</button>
