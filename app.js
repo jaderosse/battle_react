@@ -27,9 +27,14 @@ app.get('*', function(req, res, next) {
 
 io.on("connection", socket => {
 	console.log("new client connected")
-  	socket.on("color change", color => {
-  		io.sockets.emit("color has changed", color);
+  	// socket.on("color change", color => {
+  	socket.on("cell value", (val, col) => {
+  		io.sockets.emit("change per val", {val: val, col: col});	
   	})
+  		// io.sockets.emit("color has changed", color);
+  		// console.log(socket.id)
+  		// io.to(socket.id).emit("color has changed", color)
+  	// })
   	socket.on("disconnect", () => {
   		console.log("user disconnect");
   	})

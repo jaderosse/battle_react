@@ -22,21 +22,26 @@ class Socket extends Component {
 
 componentDidMount = () => {
   const socket = socketIOClient(this.state.endpoint)
-  socket.on('color has changed', (col) => {
-    // document.body.style.backgroundColor = col
+  socket.on("change per val", (val, col) => {
     this.setState({color: col})
+    document.getElementById(val.val.value).style.backgroundColor = val.val.color; 
   })
 }
 
   send = () => {
     const socket = socketIOClient(this.state.endpoint)
-    socket.emit('color change', this.state.color)
+    var bothVals = {
+      value: this.props.value,
+      color: this.state.color
+    }
+    socket.emit('cell value', bothVals)
   }
 
   render() {
-    console.log()
+    console.log(this.props.value)
     return (
-      <div id={this.props.value} className="cell" style={{backgroundColor: this.state.color}}>
+      <div id={this.props.value} className="cell">
+        <h1>{this.props.value}</h1>
         <button onClick={() => this.send() }>Change Color</button>
         <button id="blue" onClick={() => this.setState({color: 'blue'})}>Blue</button>
         <button id="red" onClick={() => this.setState({color: 'red'})}>Red</button>
