@@ -7,26 +7,35 @@ class Socket extends Component {
     super();
     this.state = {
       endpoint: "http://127.0.0.1:4001/",
-      color: 'white'
+      color: 'white',
+      shipPresent: [1]
     }
   }
 
-  //this.props.value
+// if shipPresent.indexOf(this.props.value) === -1,
+//   return miss
 
   //eventually want controls without buttons
   //click inside component to change color based on if ship is present
   //grey for miss, red for hit
   //if isHit, pass props to scorekeeping component
-  //keep like sockets interacting for each board
-  //give each cell unique id, then connect each w/socket
 
-componentDidMount = () => {
-  const socket = socketIOClient(this.state.endpoint)
-  socket.on("change per val", (val, col) => {
-    this.setState({color: col})
-    document.getElementById(val.val.value).style.backgroundColor = val.val.color; 
-  })
-}
+
+  componentDidMount = () => {
+    const socket = socketIOClient(this.state.endpoint)
+    socket.on("change per val", (val, col) => {
+      this.setState({color: col})
+      document.getElementById(val.val.value).style.backgroundColor = val.val.color; 
+    })
+  }
+
+  determine = () => {
+    if(this.state.shipPresent.indexOf(this.props.value) !== -1){
+      this.setState({color: "red"})
+    } else {
+      this.setState({color: "grey"})
+    }
+  }
 
   send = () => {
     const socket = socketIOClient(this.state.endpoint)
@@ -38,13 +47,12 @@ componentDidMount = () => {
   }
 
   render() {
-    console.log(this.props.value)
+    
     return (
       <div id={this.props.value} className="cell">
         <h1>{this.props.value}</h1>
-        <button onClick={() => this.send() }>Change Color</button>
-        <button id="blue" onClick={() => this.setState({color: 'blue'})}>Blue</button>
-        <button id="red" onClick={() => this.setState({color: 'red'})}>Red</button>
+        <button onClick={() => this.determine()}>Make your guess</button>
+        <button onClick={() => this.send() }>Submit</button>
       </div>
     );
   }
