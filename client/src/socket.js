@@ -8,12 +8,9 @@ class Socket extends Component {
     this.state = {
       endpoint: "http://127.0.0.1:4001/",
       color: 'white',
-      shipPresent: [1]
+      shipPresent: [1, 2, 3]
     }
   }
-
-// if shipPresent.indexOf(this.props.value) === -1,
-//   return miss
 
   //eventually want controls without buttons
   //click inside component to change color based on if ship is present
@@ -47,14 +44,13 @@ class Socket extends Component {
   }
 
   render() {
-    
     return (
       <div id={this.props.value} className="cell">
         <h1>{this.props.value}</h1>
         <button onClick={() => this.determine()}>Make your guess</button>
         <button onClick={() => this.send() }>Submit</button>
       </div>
-    );
+    )
   }
 }
 

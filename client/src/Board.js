@@ -5,7 +5,7 @@ import Socket from './socket.js';
 class Board extends Component {
 	render(){
 		let cells = [];
-  	for (let i = 0; i < 10; i++) {
+  	for (let i = 1; i <= 9; i++) {
     	cells.push(<Socket value={i} />);
   	}
 			return (
