@@ -27,6 +27,7 @@ class Socket extends Component {
   }
 
   determine = () => {
+    document.getElementById(this.props.value).style.backgroundColor = "pink";
     if(this.state.shipPresent.indexOf(this.props.value) !== -1){
       this.setState({color: "red"})
     } else {
